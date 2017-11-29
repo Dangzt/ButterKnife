@@ -2,6 +2,8 @@ package com.bwie.butterknife;
 
 import android.app.Application;
 
+import org.greenrobot.eventbus.EventBus;
+
 import butterknife.ButterKnife;
 
 /**
@@ -13,5 +15,7 @@ public class App extends Application{
     public void onCreate() {
         super.onCreate();
         ButterKnife.setDebug(BuildConfig.DEBUG);
+
+        EventBus.builder().addIndex(new MyEventBusIndex()).installDefaultEventBus();
     }
 }

@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
+import org.greenrobot.eventbus.EventBus;
+
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
@@ -15,16 +17,21 @@ public  class BaseActivity extends AppCompatActivity {
 
     Unbinder unbinder;
 
+    EventBus eventBus;
+
     @Override
     public void setContentView(int layoutResID) {
         super.setContentView(layoutResID);
         unbinder = ButterKnife.bind(this);
+
     }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        EventBus.getDefault().register(this);
+        eventBus=EventBus.getDefault();
     }
 
     @Override
@@ -34,5 +41,7 @@ public  class BaseActivity extends AppCompatActivity {
         if (unbinder != null) {
             unbinder.unbind();
         }
+
+        EventBus.getDefault().unregister(this);
     }
 }
